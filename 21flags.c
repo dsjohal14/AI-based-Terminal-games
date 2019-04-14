@@ -9,20 +9,20 @@
 #define CYN   "\x1B[36m"
 #define WHT   "\x1B[37m"
 #define RESET "\x1B[0m"
-int noflags=21;
+int noflags=21; // deciding number of flags as name suggests there should be 21 flags
 void startgame();
-void input_singleplayer();
+void input_singleplayer(); 
 void input_com();
 char name1[20],name2[20];
-void delay(int number_of_seconds) 
+void delay(int number_of_seconds) // delaying display
 { 
     int micro_seconds = 1000000 * number_of_seconds; 
     clock_t start_time = clock(); 
     while (clock() < start_time + micro_seconds);
 }
+// printing of flags
 void printgame()
 {
-
     system("clear");
     for(int i=0;i<noflags;i++)
     {
@@ -43,18 +43,21 @@ void printgame()
     }
     printf(RESET"\n\n\n");
 }
+// function for taking input from computer
 void input_com()
 {
     printgame();
     printf("\n\nWait ! , Computer is thinking ....\n");
     delay(1);
-    if(noflags==1)
+    
+    if(noflags==1) // no choice is left bound to lose
     {
         noflags=0;
         system("clear");
         printf(YEL"\n\n\n          Congratulations , You Win !\n\n\n"RESET);
         return;
     }
+    // if number of flags is already 4*m + 1 type where m is integer than making a random move
     if(noflags==17||noflags==13||noflags==9||noflags==5)
     {
         int rmvflags=abs(rand()%2)+1;
@@ -62,6 +65,7 @@ void input_com()
         input_singleplayer();
         return;
     }
+    //otherwise just making it of 4*m +1 type for different cases
     if(noflags<21&&noflags>17)
     {
         noflags=17;
@@ -93,13 +97,14 @@ void input_com()
         return;
     }
 }
+// taking input in single player game
 void input_singleplayer()
 {
     printgame();
     int rmvflags;
     printf("Your turn... Enter number of flags you want to remove(1-3) : ");
     scanf("%d",&rmvflags);
-    if(rmvflags>3||noflags-rmvflags<0)
+    if(rmvflags>3||noflags-rmvflags<0||rmvflags<1)
     {
         system("clear");
         input_singleplayer();
@@ -115,6 +120,7 @@ void input_singleplayer()
     }
     input_com();
 }
+// input in multiplayer game
 void input_multiuser(int t)
 {
     printgame();
@@ -124,7 +130,7 @@ void input_multiuser(int t)
         printf("%s's turn ...Enter number of flags you want to remove (1-3) :",name2);
     int out_flags;
     scanf("%d",&out_flags);
-    if(noflags-out_flags<0||out_flags>3||out_flags<1)
+    if(noflags-out_flags<0||out_flags>3||out_flags<1) // checking condition for correct move
     {
         printgame();
         printf("Invalid Move\n");
@@ -132,7 +138,7 @@ void input_multiuser(int t)
         return;
     }
     noflags-=out_flags;
-    if(noflags==0)
+    if(noflags==0) // game has finished
     {
         system("clear");
         if(t==0)
@@ -163,8 +169,10 @@ void read_instructions()
         system("exit");
     }
 }
+// what is displayed on screen whem you open the game
 void startgame()
 {
+    system("clear");
     printf(BLU "\n\n\n\n\n\n                         Welcome to 21 FLAGS Game\n\n\n\n\n\n"RESET);
     int option;
     printf("                1 PLAYER_1 vs PLAYER_2\n\n                2 PLAYER vs COMPUTER\n\n                3 READ INSTRUCTIONS\n\n                4 EXIT GAME\n\n       Dear human, please select any option : ");
@@ -184,7 +192,7 @@ void startgame()
         printf("        PLAYER , ENTER YOUR NAME : ");
         scanf("%s",name1);
         srand(time(0));
-        int t=rand()%2;
+        int t=rand()%2;// deciding who will go first
         t=abs(t);
         if(t==1)
         {
@@ -212,7 +220,6 @@ void startgame()
 int main()
 {
     system("clear");
-    int n=21;
     printf(BLU "\n\n\n\n\n\n                         Welcome to 21 FLAGS Game\n\n\n\n\n\n"RESET);
     delay(1);
     system("clear");
