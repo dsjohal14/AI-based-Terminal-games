@@ -12,6 +12,8 @@
 #define WHT   "\x1B[37m"
 #define RESET "\x1B[0m"
 void startgame();
+// declaring variables keeping all of them global so that they can be used in all functions
+//diff=9 suggests that we will be dividing random number by 9
 int i,j,k=0,x,y,chk=0,win=0,u_pos_a[5][2],u_pos_b[4][2],u_pos_d[3][2],u_pos_c[2][2],a=0,b=0,c=0,d=0,probab,diff=9;
     char grid_u[10][10],grid_u_v[10][10],grid_c[10][10],grid_c_v[10][10],orin[2],tempstr[10],ch;
 void readinstructions()
@@ -41,13 +43,13 @@ void readinstructions()
         return;
     }
 }
+// delay function
 void delay(clock_t a)
 {
     clock_t start = clock();
     while(clock()-start<a);
-}
-    
-
+}   
+// displaying start screen
 void startgame()
 {
     system("clear");
@@ -78,6 +80,7 @@ void startgame()
         system("exit");
     }
 }
+// function of printing of matrix
 void print_grid(char a[10][10])
 {
     for(i=0;i<10;i++)
@@ -140,7 +143,7 @@ int main()
     }
     print_grid(grid_u);
     
-   /*Aircraft carrier*/
+   /* placing Aircraft carrier*/
     for(;;)
     {
         printf("Aircraft Carrier:\n");
@@ -191,7 +194,7 @@ int main()
     system("clear");
     print_grid(grid_u);
     
-    /*B:Battleship*/
+    /* placing B:Battleship*/
     for(;;)
     {
         chk=0;
@@ -272,7 +275,7 @@ int main()
     system("clear");
     print_grid(grid_u);
     
-    /*Destroyer*/
+    /*placing Destroyer*/
     for(;;)
     {
         chk=0;
@@ -352,7 +355,7 @@ int main()
     system("clear");
     print_grid(grid_u);
     
-    /*Corvette*/
+    /*placing Corvette*/
     for(;;)
     {
         chk=0;
@@ -432,7 +435,7 @@ int main()
     print_grid(grid_u);
     
     srand(time(NULL));
-    /*Aircraft carrier cpu*/
+    /*computer placing Aircraft carrier */
     for(;;)
     {
         if(rand()%2 == 1)
@@ -467,7 +470,7 @@ int main()
             }
         }
     }
-    /*B:Battleship cpu*/
+    /*computer placing B:Battleship */
     for(;;)
     {
         chk=0;
@@ -527,7 +530,7 @@ int main()
             }
         }
     }
-    /*Destroyer cpu*/
+    /*Computer placing Destroyer*/
     for(;;)
     {
         chk=0;
@@ -589,7 +592,7 @@ int main()
             }
         }
     }
-    /*Corvette cpu*/
+    /*Computer placing Corvette */
     for(;;)
     {
         chk=0;
@@ -651,7 +654,7 @@ int main()
             }
         }
     }
-
+    // equating matrix to store its value for allowing computer to make changes
     for(i=0;i<10;i++)
     {
         for(j=0;j<10;j++)
@@ -667,7 +670,7 @@ int main()
 
         for(;;)
         {
-            printf("Enter x and y: ");
+            printf("Enter x and y: ");// asking for row and column respectively to hit
             scanf("%d %d", &x,&y);
             if(x>9 || x<0 || y>9 || y<0 || grid_c_v[x][y]=='H' || grid_c_v[x][y]=='*')
             {
@@ -719,32 +722,33 @@ int main()
             break;
         for(;;)
         {
+            // finding probab
             probab=rand()%diff;
-            if(probab==diff-3&& a<5)
+            if(probab==diff-3&& a<5) // hitting at first ship
             {
                 x=u_pos_a[a][0];
                 y=u_pos_a[a][1];
                 a++;
             }
-            else if(probab==diff-2 && b<4)
+            else if(probab==diff-2 && b<4) // hitting at second ship
             {
                 x=u_pos_b[b][0];
                 y=u_pos_b[b][1];
                 b++;
             }
-            else if(probab==diff-5 && d<3)
+            else if(probab==diff-5 && d<3) // hitting at third ship
             {
                 x=u_pos_d[d][0];
                 y=u_pos_d[d][1];
                 d++;
             }
-            else if(probab==diff-6 && c<2)
+            else if(probab==diff-6 && c<2) // hitting at fourth ship
             {
                 x=u_pos_c[c][0];
                 y=u_pos_c[c][1];
                 c++;
             }
-            else
+            else // cpu making a random move
             {
                 x=rand()%10;
                 y=rand()%10;
@@ -786,12 +790,13 @@ int main()
                     win++;
             }
         }
-        if(win==14)
+        if(win==14)// checking result
         {
             printf("\nYou win!\n");
             break;
         }
         win=0;
+        // checking for our loss
         for(i=0;i<10;i++)
         {
             for(j=0;j<10;j++)
